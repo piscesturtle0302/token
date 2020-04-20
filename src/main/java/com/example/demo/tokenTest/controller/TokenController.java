@@ -65,8 +65,14 @@ public class TokenController {
     @RequestMapping(value = "/echo", method = RequestMethod.POST, consumes = "application/json")
     public Map<String,Object> echo(@RequestBody CheckmarxForm checkmarxForm, HttpServletRequest request) {
         try {
+            int MAX_LOOPS = 15;
+            int loops = checkmarxForm.getIntUserInputLCount();
+            if(loops > MAX_LOOPS){
+                loops = MAX_LOOPS; 
+            }
+
             int count = 0;
-            for(int i = 0; i < checkmarxForm.getIntUserInputLCount(); i++){
+            for(int i = 0; i < loops; i++){
                 count++;
             }
 
