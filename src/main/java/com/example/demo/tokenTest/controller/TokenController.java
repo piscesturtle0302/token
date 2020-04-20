@@ -67,7 +67,7 @@ public class TokenController {
         try {
             int intMaxLoops = 15;
             int loops = checkmarxForm.getIntUserInputLCount();
-            loops = (loops > intMaxLoops)? loops : intMaxLoops;
+            loops = (loops > intMaxLoops)? intMaxLoops : loops;
 
             int count = 0;
             for(int i = 0; i < loops; i++){
