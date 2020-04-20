@@ -17,4 +17,32 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzU1MDU0LCJl
   "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzU1MDU0LCJleHAiOjE1ODczNTUxMTR9.nAnon2pRKbrWl-Mvub-0m75tyn5UEXmMMs6ANM8H5Ww"
 }
 
+# For Hans
+
 ###
+
+POST http://localhost:8080/token/getToken HTTP/1.1
+content-type: application/json
+
+{
+  "id": "Abcd"
+}
+
+###
+
+POST http://localhost:8080/token/checkToken HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzY2MjMyLCJleHAiOjE1ODczNjYyOTJ9.V2YVNGJgI70nl7N2UDM61nZPg3aiH--5cxKKHUhh73s
+
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzY2MjMyLCJleHAiOjE1ODczNjYyOTJ9.V2YVNGJgI70nl7N2UDM61nZPg3aiH--5cxKKHUhh73s"
+}
+
+###
+
+POST http://localhost:8080/token/echo HTTP/1.1
+content-type: application/json
+
+{
+  "intUserInputLCount": 10
+}

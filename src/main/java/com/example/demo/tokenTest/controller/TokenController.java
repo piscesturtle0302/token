@@ -2,6 +2,7 @@ package com.example.demo.tokenTest.controller;
 
 import com.example.demo.common.enums.WebErrCode;
 import com.example.demo.common.util.ResultHelper;
+import com.example.demo.tokenTest.form.CheckmarxForm;
 import com.example.demo.tokenTest.form.TokenForm;
 import io.jsonwebtoken.JwtException;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -58,6 +59,24 @@ public class TokenController {
         } catch (JwtException e) {
             return ResultHelper.returnException(WebErrCode.err401,e.getMessage());
             //don't trust the JWT!
+        }
+    }
+
+    @RequestMapping(value = "/echo", method = RequestMethod.POST, consumes = "application/json")
+    public Map<String,Object> echo(@RequestBody CheckmarxForm checkmarxForm, HttpServletRequest request) {
+        try {
+            int count = 0;
+            for(int i = 0; i < checkmarxForm.getIntUserInputLCount(); i++){
+                count++;
+            }
+
+            Map<String,Object> data = new HashMap<>();
+            data.put("checkmarxForm", checkmarxForm);
+            data.put("count", count);
+            
+            return ResultHelper.returnResult(WebErrCode.err200, data);            
+        } catch (JwtException e) {
+            return ResultHelper.returnException(WebErrCode.err401, e.getMessage());            
         }
     }
 
