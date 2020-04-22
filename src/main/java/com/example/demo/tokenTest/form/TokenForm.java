@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TokenForm {
-    String id;
-    String token;
+    String account;
+    String name;
 }
