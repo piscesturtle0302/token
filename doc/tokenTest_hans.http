@@ -1,0 +1,20 @@
+###
+
+POST http://localhost:8080/token/getToken HTTP/1.1
+content-type: application/json
+
+{
+  "id": "Abcd"
+}
+
+###
+
+POST http://localhost:8080/token/checkToken HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzU1MDU0LCJleHAiOjE1ODczNTUxMTR9.nAnon2pRKbrWl-Mvub-0m75tyn5UEXmMMs6ANM8H5Ww
+
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzU1MDU0LCJleHAiOjE1ODczNTUxMTR9.nAnon2pRKbrWl-Mvub-0m75tyn5UEXmMMs6ANM8H5Ww"
+}
+
+###
