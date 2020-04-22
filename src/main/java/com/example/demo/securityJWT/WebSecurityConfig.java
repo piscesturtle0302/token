@@ -1,4 +1,4 @@
-package com.example.demo.secrutyJWT;
+package com.example.demo.securityJWT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

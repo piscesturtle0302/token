@@ -1,4 +1,4 @@
-package com.example.demo.secrutyJWT;
+package com.example.demo.securityJWT;
 
 import com.example.demo.customer.entity.Customer;
 import com.example.demo.customer.service.CustomerService;

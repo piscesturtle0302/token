@@ -1,4 +1,4 @@
-package com.example.demo.secrutyJWT;
+package com.example.demo.securityJWT;
 
 import java.io.IOException;
 
