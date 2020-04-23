@@ -20,8 +20,7 @@ public class TestController {
     
     @RequestMapping(value = "/hello", method = RequestMethod.POST, consumes = "application/json")
     public Map<String,Object> hello(HttpServletResponse response) {
-        
-        //Customer customer = customerService.findCustomer(131244L);
+
         return ResultHelper.returnResult(WebErrCode.err200, "Hello");
     }
 

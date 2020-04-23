@@ -2,10 +2,7 @@ package com.example.demo.securityJWT;
 
 import com.example.demo.customer.service.CustomerService;
 import com.example.demo.tokenTest.form.TokenForm;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,27 +21,34 @@ public class JwtUtil {
     private static CustomerService customerService = new CustomerService();
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication user) {
-        System.out.println(key);
+        //JWT Header
+        Map<String,Object> header = new HashMap<>();
+        header.put("typ","JWT");
+        header.put("alg","HS256");
 
+        //取得現在時間
         long nowMillis = System.currentTimeMillis() + 60 * 60 * 8;
         Date now = new Date(nowMillis);
+        //取得到期時間 1 分鐘
         long expMillis = nowMillis + 60 * 1 * 1000;
         Date exp = new Date(expMillis);
+        //建立Claims
         TokenForm tokenForm = new TokenForm();
+        //取得權限
         List<String> authority = new ArrayList<>();
-
         for (GrantedAuthority grantedAuthority:user.getAuthorities()) {
             if(!grantedAuthority.getAuthority().equals("")) {
                 authority.add(grantedAuthority.getAuthority());
             }
         }
-
         tokenForm.setAccount(user.getPrincipal().toString());
         tokenForm.setAuthority(authority);
         Map<String,Object> claims = new HashMap<>();
         claims.put("info", tokenForm);
+        claims.put("key",key);
 
         String jws = Jwts.builder()
+                .setHeader(header)
                 .setClaims(claims)//資料
                 .setSubject(tokenForm.getAccount())//id
                 .setIssuedAt(now)//簽發時間
