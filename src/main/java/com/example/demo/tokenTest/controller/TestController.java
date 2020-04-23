@@ -23,11 +23,7 @@ import java.util.Map;
 @RequestMapping("/Test")
 public class TestController {
     @Autowired
-<<<<<<< HEAD
-    CustomerService customerService = new CustomerService();
-=======
     private CustomerService customerService = new CustomerService();
->>>>>>> adan
     
     @RequestMapping(value = "/hello", method = RequestMethod.POST, consumes = "application/json")
     public Map<String,Object> hello(HttpServletResponse response) {
