@@ -21,6 +21,7 @@ public class JwtUtil {
     private static CustomerService customerService = new CustomerService();
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication user) {
+        System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
         //JWT Header
         Map<String,Object> header = new HashMap<>();
         header.put("typ","JWT");
