@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class TokenForm {
     String account;
+    String password;
     String name;
 }

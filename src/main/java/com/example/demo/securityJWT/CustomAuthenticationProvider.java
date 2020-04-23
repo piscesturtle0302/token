@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 @Service
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -20,11 +21,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 獲得使用者帳號及密碼
         String account = authentication.getName();
+        String password = authentication.getCredentials().toString();
         Customer customer = customerService.findCustomer(account);
+        String encoderPassword = DigestUtils.md5DigestAsHex(password.getBytes());
+
         // 帳號密碼驗證邏輯
-        if (account.equals(customer.getAccount())) {
+        if (account.equals(customer.getAccount()) && encoderPassword.equals(customer.getPassword())) {
             // 生成Authentication令牌
-            return new UsernamePasswordAuthenticationToken(account, account);
+            return new UsernamePasswordAuthenticationToken(account, password);
         } else {
             throw new BadCredentialsException("Password error");
         }

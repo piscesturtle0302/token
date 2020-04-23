@@ -45,8 +45,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter  {
         
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password, authorities);
-        
-        return authenticationToken;
+        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        return authenticate;
     }
 
     @Override
