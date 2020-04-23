@@ -2,14 +2,12 @@ package com.example.demo.customer.entity;
 
 import com.example.demo.customer.enums.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -234,7 +232,7 @@ public class Customer implements UserDetails {
     @JsonIgnore
     @Override
     public String getUsername() {
-        return null;
+        return account;
     }
 
     @JsonIgnore
