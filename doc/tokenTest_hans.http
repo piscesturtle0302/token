@@ -1,20 +1,14 @@
 ###
 
-POST http://localhost:8080/token/getToken HTTP/1.1
-content-type: application/json
-
-{
-  "id": "Abcd"
-}
+POST http://localhost:8080/login?username=A128976080&password=A128976080 HTTP/1.1
 
 ###
 
-POST http://localhost:8080/token/checkToken HTTP/1.1
+POST http://localhost:8080/Test/hello HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzU1MDU0LCJleHAiOjE1ODczNTUxMTR9.nAnon2pRKbrWl-Mvub-0m75tyn5UEXmMMs6ANM8H5Ww
-
-{
-  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmNkIiwiaWF0IjoxNTg3MzU1MDU0LCJleHAiOjE1ODczNTUxMTR9.nAnon2pRKbrWl-Mvub-0m75tyn5UEXmMMs6ANM8H5Ww"
-}
 
 ###
+
+POST http://localhost:8080/Test/user HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpbmZvIjp7ImFjY291bnQiOiJBMTI4OTc2MDgwIiwibmFtZSI6IkhhbnMgSHVhbmcifSwic3ViIjoiQTEyODk3NjA4MCIsImlhdCI6MTU4NzU1NjU5MSwiZXhwIjoxNTg3NTU2NjUxfQ.JABEmJ8m8cDuTayrWZMOqiL6EIW3PD0YkzrllZjJOz4

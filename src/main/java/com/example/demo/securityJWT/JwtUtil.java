@@ -28,18 +28,22 @@ public class JwtUtil {
     private static CustomerService customerService = new CustomerService();
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication user) {
+        System.out.println(key);
 
         long nowMillis = System.currentTimeMillis() + 60 * 60 * 8;
         Date now = new Date(nowMillis);
         long expMillis = nowMillis + 60 * 1 * 1000;
         Date exp = new Date(expMillis);
         TokenForm tokenForm = new TokenForm();
-        Customer customer = customerService.findCustomer(tokenForm.getAccount());
-
+        /*
+        Customer customer = customerService.findCustomer(user.getName());
         tokenForm.setAccount(customer.getAccount());
         tokenForm.setName(customer.getLocalName());
+        */
+        tokenForm.setAccount("A128976080");
+        tokenForm.setName("Hans Huang");
         Map<String,Object> claims = new HashMap<>();
-        claims.put("info",tokenForm);
+        claims.put("info", tokenForm);
 
         String jws = Jwts.builder()
                 .setClaims(claims)//資料
@@ -49,35 +53,38 @@ public class JwtUtil {
                 .signWith(key)//加密鑰匙
                 .compact();//生成JWT
 
+        System.out.println(jws);
         response.setHeader("Authorization" ,"Bearer " + jws);
     }
 
     // JWT驗證方法
-    public static Authentication getAuthentication(HttpServletRequest request) {
+    public static UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
 
         // 從request的header拿回token
         String token = request.getHeader("Authorization");
 
-        if (token != null) {
-            // 解析 Token
-            try {
-                Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-
-                // 拿用户名
-                String user = claims.getSubject();
-
-                // 得到權限
-                List<GrantedAuthority> authorities =
-                        AuthorityUtils.commaSeparatedStringToAuthorityList((String) claims.get("authorize"));
-                // 返回Token
-                return user != null ?
-                        new UsernamePasswordAuthenticationToken(user, null, authorities) :
-                        null;
-            } catch (JwtException ex) {
-                System.out.println(ex);
-            }
-
+        // 解析 Token
+        try {
+            
+            Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token.replace("Bearer ", ""))
+                .getBody();
+            // 拿用户名
+            String user = claims.getSubject();
+            
+            System.out.println(user);
+            // 得到權限
+            List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList((String) claims.get("authorize"));
+            // 返回Token
+            return user != null ?
+                    new UsernamePasswordAuthenticationToken(user, null, authorities) :
+                    null;
+        } catch (JwtException ex) {
+            System.out.println(ex);
         }
+        
         return null;
     }
 }

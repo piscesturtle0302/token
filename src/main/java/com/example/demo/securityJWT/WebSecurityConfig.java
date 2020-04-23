@@ -1,11 +1,15 @@
 package com.example.demo.securityJWT;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
@@ -13,19 +17,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 設置HTTP請求驗證
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // 因為是JWT，無須csrf驗證
-        http.csrf().disable()
-                // 對請求進行驗證
-                .authorizeRequests()
-                // 所有/login的请求放行
-                .antMatchers("/login").permitAll()
-                // ... 中間配置省略
+        
+        http
+            .cors()
                 .and()
-                // 添加過濾器，針對/login的請求，交給LoginFilter處理
-                .addFilterBefore(new LoginFilter("/login", authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                // 添加過濾器，針對其他請求進行JWT的驗證
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+            .csrf()
+                .disable() // 因為是JWT，無須csrf驗證            
+            // 對請求進行驗證
+            .authorizeRequests()
+                .antMatchers("/index.html", "/Test/hello").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .addFilter(new JWTLoginFilter(authenticationManager()))
+            .addFilter(new JWTAuthenticationFilter(authenticationManager()));
     }
 
     @Override

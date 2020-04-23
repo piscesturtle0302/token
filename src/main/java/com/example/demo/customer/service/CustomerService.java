@@ -18,4 +18,12 @@ public class CustomerService {
         }
         return customer;
     }
+
+    public Customer findCustomer (Long id) {
+        Customer customer = new Customer();
+        if (id!=null) {
+            customer = customerDao.findById(id).get();
+        }
+        return customer;
+    }
 }
