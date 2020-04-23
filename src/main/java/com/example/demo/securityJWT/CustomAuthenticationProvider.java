@@ -28,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // 帳號密碼驗證邏輯
         if (account.equals(customer.getAccount()) && encoderPassword.equals(customer.getPassword())) {
             // 生成Authentication令牌
-            return new UsernamePasswordAuthenticationToken(account, password);
+            return new UsernamePasswordAuthenticationToken(account, password,customer.getAuthorities());
         } else {
             throw new BadCredentialsException("Password error");
         }

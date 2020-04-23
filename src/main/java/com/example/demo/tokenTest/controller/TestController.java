@@ -5,18 +5,11 @@ import com.example.demo.common.util.ResultHelper;
 import com.example.demo.customer.entity.Customer;
 import com.example.demo.customer.service.CustomerService;
 import com.example.demo.tokenTest.form.TokenForm;
-import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
-import io.jsonwebtoken.security.Keys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Key;
-
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController

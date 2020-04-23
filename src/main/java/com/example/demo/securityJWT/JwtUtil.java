@@ -1,6 +1,5 @@
 package com.example.demo.securityJWT;
 
-import com.example.demo.customer.entity.Customer;
 import com.example.demo.customer.service.CustomerService;
 import com.example.demo.tokenTest.form.TokenForm;
 import io.jsonwebtoken.Claims;
@@ -17,10 +16,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JwtUtil {
     private static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -35,13 +31,16 @@ public class JwtUtil {
         long expMillis = nowMillis + 60 * 1 * 1000;
         Date exp = new Date(expMillis);
         TokenForm tokenForm = new TokenForm();
-        /*
-        Customer customer = customerService.findCustomer(user.getName());
-        tokenForm.setAccount(customer.getAccount());
-        tokenForm.setName(customer.getLocalName());
-        */
-        tokenForm.setAccount("A128976080");
-        tokenForm.setName("Hans Huang");
+        List<String> authority = new ArrayList<>();
+
+        for (GrantedAuthority grantedAuthority:user.getAuthorities()) {
+            if(!grantedAuthority.getAuthority().equals("")) {
+                authority.add(grantedAuthority.getAuthority());
+            }
+        }
+
+        tokenForm.setAccount(user.getPrincipal().toString());
+        tokenForm.setAuthority(authority);
         Map<String,Object> claims = new HashMap<>();
         claims.put("info", tokenForm);
 
