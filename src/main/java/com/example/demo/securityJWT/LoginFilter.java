@@ -1,3 +1,4 @@
+/*
 package com.example.demo.securityJWT;
 
 import java.io.IOException;
@@ -63,3 +64,4 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         response.getOutputStream().println("Login Error");
     }
 }
+*/
