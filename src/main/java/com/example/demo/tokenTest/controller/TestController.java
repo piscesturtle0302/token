@@ -7,6 +7,7 @@ import com.example.demo.customer.service.CustomerService;
 import com.example.demo.tokenTest.form.TokenForm;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import io.jsonwebtoken.security.Keys;
 
@@ -22,30 +23,27 @@ import java.util.Map;
 @RequestMapping("/Test")
 public class TestController {
     @Autowired
-    private static CustomerService customerService = new CustomerService();
+    private CustomerService customerService = new CustomerService();
     
     @RequestMapping(value = "/hello", method = RequestMethod.POST, consumes = "application/json")
     public Map<String,Object> hello(HttpServletResponse response) {
         
-        Customer customer = customerService.findCustomer(131244L);
-        return ResultHelper.returnResult(WebErrCode.err200, customer);
-
+        //Customer customer = customerService.findCustomer(131244L);
+        return ResultHelper.returnResult(WebErrCode.err200, "Hello");
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = "application/json")
-    public Map<String,Object> user(HttpServletRequest request) {
+    public Map<String,Object> user(@RequestBody TokenForm tokenForm, HttpServletRequest request) {
 
-        Customer customer = customerService.findCustomer("A128976080");
+        Customer customer = customerService.findCustomer(tokenForm.getAccount());
 
         return ResultHelper.returnResult(WebErrCode.err200, customer);
-
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.POST, consumes = "application/json")
     public Map<String,Object> admin(HttpServletRequest request) {
 
         return ResultHelper.returnResult(WebErrCode.err200, "admin");
-
     }
 
 }
