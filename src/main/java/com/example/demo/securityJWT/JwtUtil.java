@@ -24,7 +24,7 @@ public class JwtUtil {
     private static CustomerService customerService = new CustomerService();
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication user) {
-        System.out.println(key);
+        System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
 
         long nowMillis = System.currentTimeMillis() + 60 * 60 * 8;
         Date now = new Date(nowMillis);
