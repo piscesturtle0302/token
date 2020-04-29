@@ -10,15 +10,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.*;
 
 public class JwtUtil {
-    private static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    @Autowired
-    private static CustomerService customerService = new CustomerService();
+    //private static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    //tFodxvXmFg+pYjfmqC556aWpfowlgWONo++tkpBxaTU=
+    private static Key key = Keys.hmacShaKeyFor("tFodxvXmFg+pYjfmqC556aWpfowlgWONo++tkpBxaTU=".getBytes());
+
+    //@Autowired
+    //private static CustomerService customerService = new CustomerService();
+
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication user) {
         System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
@@ -30,8 +35,8 @@ public class JwtUtil {
         //取得現在時間
         long nowMillis = System.currentTimeMillis() + 60 * 60 * 8;
         Date now = new Date(nowMillis);
-        //取得到期時間 1 分鐘
-        long expMillis = nowMillis + 60 * 1 * 1000;
+        //取得到期時間 10 分鐘
+        long expMillis = nowMillis + 60 * 10 * 1000;
         Date exp = new Date(expMillis);
         //建立Claims
         TokenForm tokenForm = new TokenForm();
@@ -46,7 +51,7 @@ public class JwtUtil {
         tokenForm.setAuthority(authority);
         Map<String,Object> claims = new HashMap<>();
         claims.put("info", tokenForm);
-        claims.put("key",key);
+        //claims.put("key",key);
 
         String jws = Jwts.builder()
                 .setHeader(header)
